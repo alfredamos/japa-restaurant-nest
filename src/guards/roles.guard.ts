@@ -1,8 +1,11 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable prettier/prettier */
 import { Reflector } from '@nestjs/core';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { UserInfo } from 'src/models/userInfoModel';
 import { Role } from '@prisma/client';
+import { UserInfo } from 'src/models/auth/userInfoModel';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { AdminUser } from 'src/models/adminUser';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class ChangePasswordDto {
   @IsNotEmpty()
@@ -16,6 +15,4 @@ export class ChangePasswordDto {
   @IsNotEmpty()
   @IsString()
   confirmPassword: string;
-  @IsOptional()
-  adminUser: AdminUser;
 }

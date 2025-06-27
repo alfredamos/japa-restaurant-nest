@@ -65,7 +65,7 @@ export class CanModifyGuard implements CanActivate {
     //----> Check for the equality of user id from order request and the one from auth payload.
     const isSameUser = UuidTool.compare(
       userIdFromAuthPayload,
-      userIdFromOrderRequest as string,
+      userIdFromOrderRequest,
     );
 
     const isAdmin = user.role === Role.Admin;
