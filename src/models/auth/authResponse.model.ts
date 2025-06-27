@@ -1,8 +1,8 @@
-import { UserResponseModel } from "../users/userResponse.model";
+/* eslint-disable prettier/prettier */
+import { User } from "@prisma/client";
 
 export class AuthResponseModel { 
-  user: UserResponseModel = new UserResponseModel();
-  signIn?: UserResponseModel;
+  user!: User;
   isLoggedIn: boolean = false;
   token?: string = "";
   isAdmin?: boolean

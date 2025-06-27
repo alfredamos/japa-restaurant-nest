@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Controller, Post, Body, Patch } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { IsPublic } from 'src/decorators/is-public.decorator';
+import { Roles } from 'src/decorators/roles.decorator';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { EditProfileDto } from './dto/edit-profile.dto';
+import { LoginDto } from './dto/login.dto';
+import { SignupDto } from './dto/signup.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Roles('Admin', 'Customer')
+  @Patch('change-password')
+  changePassword(@Body() changePasswordDto: ChangePasswordDto) {
+    return this.authService.changePassword(changePasswordDto);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Roles('Admin', 'Customer')
+  @Patch('edit-profile')
+  editProfile(@Body() editProfileDto: EditProfileDto) {
+    return this.authService.editProfile(editProfileDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @IsPublic()
+  @Post('login')
+  login(@Body() loginDto: LoginDto) {
+    return this.authService.login(loginDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  @IsPublic()
+  @Post('signup')
+  signup(@Body() signupDto: SignupDto) {
+    return this.authService.signup(signupDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
-  }
 }

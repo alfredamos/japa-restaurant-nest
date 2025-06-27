@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export class ResponseAuth {
   id: string = "";
   name: string = "";
