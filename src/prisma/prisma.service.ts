@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePrismaDto } from './dto/create-prisma.dto';
-import { UpdatePrismaDto } from './dto/update-prisma.dto';
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable prettier/prettier */
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class PrismaService {
-  create(createPrismaDto: CreatePrismaDto) {
-    return 'This action adds a new prisma';
+export class PrismaService
+  extends PrismaClient
+  implements OnModuleInit, OnModuleDestroy
+{
+  constructor(config: ConfigService) {
+    super({
+      datasources: {
+        db: {
+          url: config.get('DATABASE_URL'),
+        },
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all prisma`;
+  onModuleInit() {
+    this.$connect();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} prisma`;
-  }
-
-  update(id: number, updatePrismaDto: UpdatePrismaDto) {
-    return `This action updates a #${id} prisma`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} prisma`;
+  onModuleDestroy() {
+    this.$disconnect();
   }
 }
