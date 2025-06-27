@@ -33,4 +33,6 @@ export class SignupDto {
   @IsOptional()
   @IsEnum(Gender)
   gender: Gender;
+  @IsOptional()
+  address: string;
 }

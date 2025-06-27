@@ -30,4 +30,6 @@ export class EditProfileDto {
   @IsOptional()
   @IsEnum(Gender)
   gender: Gender;
+  @IsOptional()
+  address: string;
 }

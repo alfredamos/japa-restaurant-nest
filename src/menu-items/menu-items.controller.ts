@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MenuItemsService } from './menu-items.service';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';

@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable prettier/prettier */
+import * as cookieParser from 'cookie-parser'; // Import cookie-parser
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -15,6 +16,7 @@ async function bootstrap() {
       'http://localhost:4200',
     ],
   });
+  app.use(cookieParser()); // Apply the middleware
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(5000);

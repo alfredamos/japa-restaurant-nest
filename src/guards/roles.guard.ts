@@ -23,7 +23,7 @@ export class RolesGuard implements CanActivate {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
     //----> Check for the existence of role.
-    if (!roles) return false;
+    if (!roles.length) return false;
 
     //----> Get the request object.
     const request = context.switchToHttp().getRequest();
@@ -31,6 +31,7 @@ export class RolesGuard implements CanActivate {
     //----> Get the user from the request object.
     const user = request.user as UserInfo;
 
+    console.log("In role-guard, user : ", user)
     //----> Check if the roles matches those who are permitted to view or use the available resources.
     return this.matchRoles(roles, user?.role);
   }

@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Post, Body, Patch } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable prettier/prettier */
+import { Controller, Post, Body, Patch, Res} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { IsPublic } from 'src/decorators/is-public.decorator';
 import { Roles } from 'src/decorators/roles.decorator';
@@ -7,6 +9,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { EditProfileDto } from './dto/edit-profile.dto';
 import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +21,7 @@ export class AuthController {
     return this.authService.changePassword(changePasswordDto);
   }
 
-  @Roles('Admin', 'Customer')
+  @Roles('Admin', 'Staff', 'User')
   @Patch('edit-profile')
   editProfile(@Body() editProfileDto: EditProfileDto) {
     return this.authService.editProfile(editProfileDto);
@@ -26,8 +29,25 @@ export class AuthController {
 
   @IsPublic()
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  async login(
+    @Body() loginDto: LoginDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const authResp = await this.authService.login(loginDto);
+    res.cookie('auth', authResp.token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+    });
+    return authResp;
+  }
+
+  @Roles('Admin', 'Staff', 'User')
+  @Post('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    console.log("I'm about to logout")
+    res.clearCookie('auth'); // Or res.cookie('myCookie', '', { expires: new Date(0) });
+    return { status: 'success', message: 'Logout is successfully!' };
   }
 
   @IsPublic()
@@ -35,5 +55,4 @@ export class AuthController {
   signup(@Body() signupDto: SignupDto) {
     return this.authService.signup(signupDto);
   }
-
 }
