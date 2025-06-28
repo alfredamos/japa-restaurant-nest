@@ -114,6 +114,11 @@ export class OrdersService {
       where: { userId: user?.id },
     });
 
+    //----> Check for existence of orders.
+    if (!orders.length){
+      throw new NotFoundException("Orders are not available for this user!")
+    }
+
     //----> Delete all these others in the database.
     this.allOrdersDeletedByUserId(orders, user?.id);
 

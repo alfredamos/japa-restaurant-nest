@@ -20,13 +20,13 @@ import { SameUserGuard } from 'src/guards/same-user.guard';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @Roles('Admin')
+  @Roles('Admin', 'Staff', 'User')
   @Post()
   createOrder(@Body() createOrderDto: OrderPayloadDto) {
     return this.ordersService.createOrder(createOrderDto);
   }
 
-  @Roles('Admin')
+  @Roles('Admin', 'Staff', 'User')
   @Patch('/checkout')
   orderCreate(@Body() createOrderDto: OrderPayloadDto) {
     return this.ordersService.orderCreate(createOrderDto);
