@@ -147,7 +147,7 @@ export class OrdersService {
 
     //----> Check for existence of orders.
     if (!allOrders.length) {
-      throw new NotFoundException('Orders are not available for this user!');
+      throw new NotFoundException('Orders are not available!');
     }
 
     return allOrders;
