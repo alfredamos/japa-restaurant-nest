@@ -20,16 +20,16 @@ export class MenuItemsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.menuItemsService.findOne(+id);
+    return this.menuItemsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMenuItemDto: UpdateMenuItemDto) {
-    return this.menuItemsService.update(+id, updateMenuItemDto);
+    return this.menuItemsService.update(id, updateMenuItemDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.menuItemsService.remove(+id);
+    return this.menuItemsService.remove(id);
   }
 }
