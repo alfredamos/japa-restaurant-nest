@@ -33,7 +33,6 @@ export class AuthController {
     @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log('I just login!!!');
     const authResp = await this.authService.login(loginDto);
     res.cookie('auth', authResp.token, {
       httpOnly: true,
@@ -43,11 +42,9 @@ export class AuthController {
     res.status(200).json(authResp);
   }
 
-  @IsPublic()
-  //@Roles('Admin', 'Staff', 'User')
+  @Roles('Admin', 'Staff', 'User')
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
-    console.log("I'm about to logout");
     res.clearCookie('auth'); // Or res.cookie('myCookie', '', { expires: new Date(0) });
     res
       .status(200)

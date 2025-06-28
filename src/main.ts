@@ -8,6 +8,10 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
+  app.setGlobalPrefix('api');
+  app.use(cookieParser()); // Apply the middleware
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.enableCors({
     credentials: true,
     origin: [
@@ -16,9 +20,6 @@ async function bootstrap() {
       'http://localhost:4200',
     ],
   });
-  app.use(cookieParser()); // Apply the middleware
-  app.setGlobalPrefix('api');
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(5000);
 }
 bootstrap();

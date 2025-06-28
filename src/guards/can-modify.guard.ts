@@ -10,6 +10,7 @@ import {
   ExecutionContext,
   NotFoundException,
   ForbiddenException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UuidTool } from 'uuid-tool';
@@ -34,6 +35,7 @@ export class CanModifyGuard implements CanActivate {
     //----> Get the authorization request object.
     const request = context.switchToHttp().getRequest();
     const { id } = request.params; //----> Get the order id request to modify.
+  
     //----> Get the order request from database.
     const order = await this.prisma.order.findUnique({
       where: { id },
@@ -70,9 +72,11 @@ export class CanModifyGuard implements CanActivate {
 
     const isAdmin = user.role === Role.Admin;
 
+    //----> Non admin and non same user cannot pass.
+    if (!isAdmin && isSameUser){
+       throw new UnauthorizedException("You are not permitted to access this page!");
+    }
     //----> Only Admin or same user is allowed.
-    const canModify = isAdmin || isSameUser;
-
-    return canModify;
+    return true;
   }
 }
