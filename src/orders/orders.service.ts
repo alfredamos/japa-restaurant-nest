@@ -116,6 +116,12 @@ export class OrdersService {
 
     //----> Delete all these others in the database.
     this.allOrdersDeletedByUserId(orders, user?.id);
+
+    //----> Send back the response.
+    return {
+      status: 'success',
+      message: 'All orders are deleted successfully!',
+    };
   }
 
   async editOrderById(id: string, orderToEdit: UpdateOrderDto) {

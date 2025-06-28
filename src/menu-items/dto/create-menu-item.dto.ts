@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
-/* eslint-disable prettier/prettier */
+/* eslint-d isable prettier/prettier */
 export class CreateMenuItemDto {
   @IsNotEmpty()
   @IsString()
