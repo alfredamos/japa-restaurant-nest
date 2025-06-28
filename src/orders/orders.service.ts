@@ -145,6 +145,11 @@ export class OrdersService {
       include: { orderDetails: true, user: true },
     });
 
+    //----> Check for existence of orders.
+    if (!allOrders.length) {
+      throw new NotFoundException('Orders are not available for this user!');
+    }
+
     return allOrders;
   }
 
@@ -157,6 +162,11 @@ export class OrdersService {
         user: true,
       },
     });
+
+    //----> Check for existence of orders.
+    if (!allOrders.length) {
+      throw new NotFoundException('Orders are not available for this user!');
+    }
 
     return allOrders;
   }
