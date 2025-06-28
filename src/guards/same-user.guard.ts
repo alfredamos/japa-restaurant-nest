@@ -51,11 +51,6 @@ export class SameUserGuard implements CanActivate {
     //----> Check for admin privilege.
     const isAdmin = user?.role === Role.Admin;
 
-    console.log('same-user-guard, userIdFromAuth : ', userIdFromAuth);
-    console.log('same-user-guard, userIdFromParam : ', userIdFromParam);
-    console.log('same-user-guard, isSameUser : ', isSameUser);
-    console.log('same-user-guard, isAdmin : ', isAdmin);
-
     //----> Non admin non same user cannot pass.
     if (!isSameUser && !isAdmin) {
       throw new UnauthorizedException(
