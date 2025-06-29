@@ -5,20 +5,22 @@
 import {
   ExecutionContext,
   Injectable,
+  CanActivate,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+//import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
+//export class JwtAuthGuard extends AuthGuard('jwt') {
+export class JwtAuthGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private jwtService: JwtService,
   ) {
-    super();
+    //super();
   }
 
   async canActivate(context: ExecutionContext) {

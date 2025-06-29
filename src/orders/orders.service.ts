@@ -72,7 +72,12 @@ export class OrdersService {
     await this.prisma.orderDetail.deleteMany({});
 
     //----> Delete all orders.
-    await this.prisma.order.deleteMany({});
+    const numberOfOrders = (await this.prisma.order.deleteMany({})).count;
+
+    //----> Check for existence of orders.
+    if (!numberOfOrders) {
+      throw new NotFoundException('Orders are not available!');
+    }
 
     //----> Send back the response.
     return {
