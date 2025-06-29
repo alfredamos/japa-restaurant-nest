@@ -76,7 +76,7 @@ export class OrdersService {
 
     //----> Check for existence of orders.
     if (!numberOfOrders) {
-      throw new NotFoundException('Orders are not available!');
+      throw new NotFoundException('Orders are not available for deletion!');
     }
 
     //----> Send back the response.
